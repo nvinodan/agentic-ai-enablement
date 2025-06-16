@@ -4,31 +4,33 @@
   --color-black: #000;
   
   /* Background colors */
-  --color-bg-primary: #f0f2f5;
-  --color-bg-container: #fff;
-  --color-bg-header: #2c3e50;
-  --color-bg-messages: #f5f7fb;
-  --color-bg-user-message: #3498db;
-  --color-bg-bot-message: #e9e9eb;
-  --color-bg-error-message: #ffebee;
-  --color-bg-button: #3498db;
-  --color-bg-button-hover: #2980b9;
-  --color-bg-button-disabled: #95a5a6;
+  --color-bg-primary: #121212;
+  --color-bg-container: #1e1e1e;
+  --color-bg-header: #1a1a2e;
+  --color-bg-messages: #252525;
+  --color-bg-user-message: #2563eb;
+  --color-bg-bot-message: #3a3a3a;
+  --color-bg-error-message: #3b1212;
+  --color-bg-button: #2563eb;
+  --color-bg-button-hover: #1d4ed8;
+  --color-bg-button-disabled: #4b5563;
+  --color-bg-sidebar: #0f0f0f;
   
   /* Text colors */
-  --color-text-primary: #333;
-  --color-text-header: white;
-  --color-text-user-message: white;
-  --color-text-bot-message: #333;
-  --color-text-error: #c62828;
-  --color-text-placeholder: #888;
+  --color-text-primary: #e0e0e0;
+  --color-text-header: #ffffff;
+  --color-text-user-message: #ffffff;
+  --color-text-bot-message: #e0e0e0;
+  --color-text-error: #f87171;
+  --color-text-placeholder: #9ca3af;
+  --color-text-sidebar: #ffffff;
   
   /* Border colors */
-  --color-border: #e0e0e0;
-  --color-border-input: #ddd;
-  --color-border-focus: #3498db;
+  --color-border: #333333;
+  --color-border-input: #4b5563;
+  --color-border-focus: #2563eb;
   
   /* Other UI elements */
-  --color-shadow: rgba(0, 0, 0, 0.1);
-  --color-typing-indicator: #bbb;
+  --color-shadow: rgba(0, 0, 0, 0.3);
+  --color-typing-indicator: #6b7280;
 }

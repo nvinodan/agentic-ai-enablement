@@ -7,11 +7,22 @@ const Chat = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
 
   // Auto-scroll to bottom of messages
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Auto-resize textarea based on content
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = '80px'; // Reset to default height
+      const newHeight = Math.max(80, Math.min(textarea.scrollHeight, 200));
+      textarea.style.height = `${newHeight}px`;
+    }
+  }, [input]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -19,6 +30,14 @@ const Chat = () => {
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
+  };
+  
+  const handleKeyDown = (e) => {
+    // Submit on Enter key, but allow Shift+Enter for new lines
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -64,14 +83,11 @@ const Chat = () => {
 
   return (
     <div className="chat-container">
-      <div className="chat-header">
-        <h2>IT Support Chatbot</h2>
-      </div>
       
       <div className="messages-container">
         {messages.length === 0 ? (
           <div className="empty-state">
-            <p>Ask me anything about IT support!</p>
+            <p>Ask me anything about IT support</p>
           </div>
         ) : (
           messages.map((message) => (
@@ -100,12 +116,14 @@ const Chat = () => {
       </div>
       
       <form className="input-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
+        <textarea
+          ref={textareaRef}
           value={input}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           placeholder="Type your message..."
           disabled={isLoading}
+          className="chat-textarea"
         />
         <button type="submit" disabled={isLoading || !input.trim()}>
           {isLoading ? 'Sending...' : 'Send'}
