@@ -28,9 +28,12 @@ A Retrieval-Augmented Generation (RAG) chatbot backend built with Node.js and Ex
    AZURE_OPENAI_INSTANCE_NAME=your-instance-name
    AZURE_OPENAI_API_KEY=your-api-key
    AZURE_OPENAI_DEPLOYMENT_NAME=your-deployment-name
+   AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME=your-embedding-deployment-name
    AZURE_OPENAI_VERSION=your-api-version
    PORT=3000
    ```
+   
+   Note: If `AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME` is not provided, the system will use `AZURE_OPENAI_DEPLOYMENT_NAME` for embeddings.
 
 ## Usage
 
@@ -77,10 +80,12 @@ POST /api/chat
 
 1. **Document Loading**: The system loads PDF documents from the `docs` directory during initialization.
 2. **Document Processing**: Documents are split into chunks with overlap for better context preservation.
-3. **Query Processing**: When a user sends a prompt, the system searches for relevant document chunks.
-4. **Context Enhancement**: The system formats a prompt with the retrieved document context.
-5. **LLM Generation**: The enhanced prompt is sent to Azure OpenAI's GPT-4o model.
-6. **Response**: The model's response is returned to the user.
+3. **Vector Embeddings**: Document chunks are embedded using Azure OpenAI's embedding model to create vector representations.
+4. **Vector Storage**: The embeddings are stored in a FAISS vector database for efficient similarity search.
+5. **Query Processing**: When a user sends a prompt, the system searches for relevant document chunks using vector similarity.
+6. **Context Enhancement**: The system formats a prompt with the retrieved document context.
+7. **LLM Generation**: The enhanced prompt is sent to Azure OpenAI's GPT-4o model.
+8. **Response**: The model's response is returned to the user.
 
 ## Project Structure
 
@@ -107,7 +112,7 @@ chatbot-backend/
 - **chromadb**: Vector database for document storage
 - **dotenv**: Environment variable management
 - **express**: Web server framework
-- **faiss-node**: Vector similarity search
+- **faiss-node**: Vector similarity search library for efficient embedding retrieval
 - **langchain**: LLM application framework
 - **pdf-parse**: PDF document parsing
 - **uuid**: Unique identifier generation

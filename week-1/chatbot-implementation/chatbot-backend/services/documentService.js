@@ -4,17 +4,31 @@
  */
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { AzureOpenAIEmbeddings } from "@langchain/openai";
+import { FaissStore } from "@langchain/community/vectorstores/faiss";
 import path from "path";
 import fs from "fs";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 // Directory containing documents
 const DOCS_DIR = path.join(process.cwd(), "docs");
 
-// In-memory document store
+// In-memory document store (for backup)
 let documentChunks = [];
+// FAISS vector store
+let vectorStore = null;
+
+// Initialize embeddings model
+const embeddings = new AzureOpenAIEmbeddings({
+  azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
+  azureOpenAIApiInstanceName: process.env.AZURE_OPENAI_INSTANCE_NAME,
+  azureOpenAIApiDeploymentName: process.env.AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME || process.env.AZURE_OPENAI_DEPLOYMENT_NAME,
+  azureOpenAIApiVersion: process.env.AZURE_OPENAI_VERSION,
+});
 
 /**
- * Initialize the document service by loading all documents
+ * Initialize the document service by loading all documents and creating FAISS index
  */
 export async function initializeDocumentService() {
   try {
@@ -29,11 +43,32 @@ export async function initializeDocumentService() {
     }
     
     console.log(`Loaded ${documentChunks.length} document chunks`);
+    
+    // Create FAISS vector store
+    await createVectorStore();
+    
     console.log("Document service initialized successfully");
     return true;
   } catch (error) {
     console.error("Error initializing document service:", error);
     throw new Error("Failed to initialize document service");
+  }
+}
+
+/**
+ * Create a FAISS vector store from documents
+ */
+async function createVectorStore() {
+  try {
+    console.log("Creating FAISS vector store...");
+    
+    // Create vector store directly in memory without saving to disk
+    vectorStore = await FaissStore.fromDocuments(documentChunks, embeddings);
+    
+    console.log("FAISS vector store created successfully");
+  } catch (error) {
+    console.error("Error creating vector store:", error);
+    throw new Error("Failed to create vector store");
   }
 }
 
@@ -100,18 +135,46 @@ function findPdfFiles(dir) {
 }
 
 /**
- * Simple keyword-based search for relevant documents
+ * Vector-based search for relevant documents using FAISS
  * @param {string} query - The search query
  * @param {number} k - Number of results to return
  * @returns {Promise<Array>} - Array of relevant documents with their content and metadata
  */
 export async function searchDocuments(query, k = 5) {
-  if (!documentChunks || documentChunks.length === 0) {
-    throw new Error("Document service not initialized");
+  if (!vectorStore) {
+    if (documentChunks.length === 0) {
+      throw new Error("Document service not initialized");
+    }
+    // Fallback to keyword search if vector store is not available
+    return keywordSearch(query, k);
   }
   
   try {
-    // Simple keyword search (not as effective as vector search but works without embeddings)
+    console.log(`Performing vector search for: "${query}"`);
+    
+    // Perform similarity search using FAISS
+    const results = await vectorStore.similaritySearch(query, k);
+    
+    console.log(`Found ${results.length} relevant documents`);
+    return results;
+  } catch (error) {
+    console.error("Error searching documents with FAISS:", error);
+    console.log("Falling back to keyword search...");
+    
+    // Fallback to keyword search if vector search fails
+    return keywordSearch(query, k);
+  }
+}
+
+/**
+ * Fallback keyword-based search for relevant documents
+ * @param {string} query - The search query
+ * @param {number} k - Number of results to return
+ * @returns {Promise<Array>} - Array of relevant documents with their content and metadata
+ */
+function keywordSearch(query, k = 5) {
+  try {
+    // Simple keyword search (not as effective as vector search but works as fallback)
     const keywords = query.toLowerCase().split(/\s+/).filter(word => word.length > 3);
     
     // Score each document chunk based on keyword matches
@@ -145,7 +208,7 @@ export async function searchDocuments(query, k = 5) {
     
     return results;
   } catch (error) {
-    console.error("Error searching documents:", error);
+    console.error("Error in keyword search:", error);
     throw new Error("Failed to search documents");
   }
 }

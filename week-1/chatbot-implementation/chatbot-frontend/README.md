@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# IT Support Chatbot Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based frontend for the IT Support Chatbot application. This application provides a user-friendly interface for interacting with the IT support bot that leverages a Retrieval-Augmented Generation (RAG) system on the backend.
+
+## Features
+
+- **Clean Chat Interface**: Modern, responsive chat UI with message history
+- **Real-time Interaction**: Immediate feedback with loading indicators
+- **Auto-scrolling**: Automatically scrolls to the latest messages
+- **Adaptive Text Input**: Textarea that resizes based on content
+- **Error Handling**: Graceful error display for failed requests
+
+## Screenshots
+
+(Screenshots to be added)
+
+## Installation
+
+1. Clone the repository:
+   ```
+   git clone <repository-url>
+   cd chatbot-frontend
+   ```
+
+2. Install dependencies:
+   ```
+   npm install
+   ```
+
+3. The frontend is configured to proxy API requests to the backend running on port 3000. Make sure the backend server is running before starting the frontend.
+
+## Usage
+
+1. Start the development server:
+   ```
+   npm start
+   ```
+
+2. The application will be available at `http://localhost:3001`
+
+3. Type your IT support questions in the chat interface and receive responses from the AI assistant.
+
+## How It Works
+
+1. **User Input**: Users type IT support questions in the chat interface
+2. **API Communication**: The frontend sends requests to the backend API
+3. **Response Rendering**: Responses from the AI are displayed in the chat interface
+4. **State Management**: React state manages the chat history and UI state
+
+## Project Structure
+
+```
+chatbot-frontend/
+├── public/                  # Public assets
+├── src/
+│   ├── components/
+│   │   ├── Chat.js          # Main chat component
+│   │   └── Chat.css         # Chat component styles
+│   ├── services/
+│   │   └── chatService.js   # API communication service
+│   ├── App.js               # Main application component
+│   ├── App.css              # Application styles
+│   ├── index.js             # Application entry point
+│   └── variables.css        # CSS variables
+├── package.json             # Project dependencies and scripts
+└── README.md                # Project documentation
+```
+
+## Dependencies
+
+- **React**: UI library for building the interface
+- **React DOM**: React rendering for web browsers
+- **React Scripts**: Configuration and scripts for Create React App
+
+## Backend Integration
+
+This frontend connects to a Node.js backend that implements a Retrieval-Augmented Generation (RAG) system. The backend processes IT support documentation and uses Azure OpenAI's GPT-4o to generate contextually relevant responses.
+
+For more information about the backend, see the [backend README](../chatbot-backend/README.md).
 
 ## Available Scripts
 
-In the project directory, you can run:
+- `npm start`: Runs the app in development mode
+- `npm test`: Launches the test runner
+- `npm run build`: Builds the app for production
+- `npm run eject`: Ejects from Create React App configuration
 
-### `npm start`
+## License
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ISC
