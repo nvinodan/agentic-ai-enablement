@@ -1,0 +1,34 @@
+:root {
+  /* Base colors */
+  --color-white: #fff;
+  --color-black: #000;
+  
+  /* Background colors */
+  --color-bg-primary: #f0f2f5;
+  --color-bg-container: #fff;
+  --color-bg-header: #2c3e50;
+  --color-bg-messages: #f5f7fb;
+  --color-bg-user-message: #3498db;
+  --color-bg-bot-message: #e9e9eb;
+  --color-bg-error-message: #ffebee;
+  --color-bg-button: #3498db;
+  --color-bg-button-hover: #2980b9;
+  --color-bg-button-disabled: #95a5a6;
+  
+  /* Text colors */
+  --color-text-primary: #333;
+  --color-text-header: white;
+  --color-text-user-message: white;
+  --color-text-bot-message: #333;
+  --color-text-error: #c62828;
+  --color-text-placeholder: #888;
+  
+  /* Border colors */
+  --color-border: #e0e0e0;
+  --color-border-input: #ddd;
+  --color-border-focus: #3498db;
+  
+  /* Other UI elements */
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-typing-indicator: #bbb;
+}
