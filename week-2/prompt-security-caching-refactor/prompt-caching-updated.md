@@ -25,16 +25,16 @@ Use only this information to answer the query accurately.
 
 ---
 
-📍 Employee Information:  
+Employee Information:  
 • Name: {{employee_name}}  
 • Department: {{department}}  
 • Location: {{location}}  
 
-📘 Leave Policy (Location-specific):  
+Leave Policy (Location-specific):  
 {{leave_policy_by_location}}  
 
-📝 HR Notes (if any):  
+HR Notes (if any):  
 {{optional_hr_annotations}}  
 
-🔎 Employee Query:  
+Employee Query:  
 {{user_input}}  
